@@ -96,7 +96,25 @@ class ProductsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $name = $request->nameproducts;
+        $detail = $request->detail;
+        $quantity = $request->quantity;
+        $price = $request->price;
+        $date = $request->expiredate;
+
+        $products = products::find($id);
+        $products->nameproducts = $name;
+        $products->detail = $detail;
+        $products->quantity = $quantity;
+        $products->price = $price;
+        $products->expiredate = $date;
+        $products->save();
+        return response()->json([
+            'massage' => 'สำเร็จ',
+            'data' => $products,
+        ], 200);
+
+
     }
 
     /**
@@ -108,7 +126,7 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         {
-            $products = Products::find($id);
+            $products = Products::where($id);
             $products->delete();
 
             return 'สำเร็จ';
